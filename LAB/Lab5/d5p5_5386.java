@@ -2,7 +2,7 @@ import General.Employee;
 import Marketing.Sales;
 import java.util.*;
 
-public class d5p5_5359 {
+public class d5p5_5386 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the employee ID and employee name:");

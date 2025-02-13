@@ -36,7 +36,7 @@ class Kiitian extends Student
 }
 
 
-public class d5p1_5359
+public class d5p1_5386
   {
     public static void main(String[] args)
  {

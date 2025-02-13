@@ -42,7 +42,7 @@ class Head1 implements Manager {
     }
 }
 
-public class d5p4_5359
+public class d5p4_5386
 {
     public static void main(String[] args) {
                 Head head = new Head();

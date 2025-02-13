@@ -23,7 +23,7 @@ class WashingMachine implements Motor {
     }
 }
 
-public class d5p2_5359{
+public class d5p2_5386{
     public static void main(String[] args) {
                 WashingMachine wm = new WashingMachine();
 
