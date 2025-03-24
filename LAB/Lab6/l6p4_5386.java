@@ -1,20 +1,29 @@
 import java.util.*;
 
-class Time extends Exception {
-    Time(){
+class HrsException extends Exception {
+    HrsException(){
         super();
     }
-    void HrsException() {
-        System.out.println("Invalid hours! Must be between 0 and 24.");
+    public String toString(){
+            return "Invalid hours! Must be between 0 and 24.";
+        }
+}
+class MinException extends Exception {
+    MinException(){
+        super();
     }
-    void MinException() {
-        System.out.println("Invalid minute! Must be between 0 and 60.");
-    }
-    void SecException() {
-        System.out.println("Invalid second! Must be between 0 and 60.");
+    public String toString(){
+        return "Invalid hours! Must be between 0 and 60.";
     }
 }
-
+class SecException extends Exception {
+    SecException(){
+        super();
+    }
+    public String toString(){
+        return "Invalid hours! Must be between 0 and 60.";
+    }
+}
 class Time {
     private int hours, minutes, seconds;
     
