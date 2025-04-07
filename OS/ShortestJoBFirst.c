@@ -1,75 +1,91 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct process{
-        int p_id;
-        int Arrival_time;
-        int Burst_time;
-        float Waiting_time;
-        float completionTime;
-        float tat;
+struct process {
+    int p_id;             
+    int Arrival_time;     
+    int Burst_time;       
+    int Completion_time;  
+    int Turnaround_time;  
+    int Waiting_time;     
 };
 
-void Tat(struct process processes[],int num){
-        for(int i=0;i<num;i++){
-                processes[i].tat=processes[i].completionTime-processes[i].Arrival_time;
-                
+void sortByArrivalTime(struct process processes[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (processes[j].Arrival_time > processes[j + 1].Arrival_time) {
+                struct process temp = processes[j];
+                processes[j] = processes[j + 1];
+                processes[j + 1] = temp;
+            }
         }
+    }
 }
-void Waiting_time(struct process processes[],int num){
-        for(int i=0;i<num;i++){
-                processes[i].Waiting_time=processes[i].tat-processes[i].Burst_time;
-        }
-}
-void checker(struct process processes[],int num){
-        for(int i=0;i<num;i++){
-            for(int j=0;j<num;j++){
-                if (processes[i].Arrival_time < processes[j].Arrival_time || processes[i].Arrival_time == processes[j].Arrival_time && processes[i].Burst_time<processes[j].Burst_time) {
-                struct process temp = processes[i];
-                processes[i] = processes[j];
-                processes[j] = temp;
+
+void sjfScheduling(struct process processes[], int n) {
+    int completed = 0, currentTime = 0, shortestIndex;
+    int isVisited[n];
+    
+    for (int i = 0; i < n; i++) {
+        isVisited[i] = 0; 
+    }
+
+    while (completed < n) {
+        shortestIndex = -1;
+        for (int i = 0; i < n; i++) {
+            if (!isVisited[i] && processes[i].Arrival_time <= currentTime) {
+                if (shortestIndex == -1 || processes[i].Burst_time < processes[shortestIndex].Burst_time) {
+                    shortestIndex = i;
                 }
             }
-                
         }
+
+        if (shortestIndex != -1) {
+            currentTime += processes[shortestIndex].Burst_time;
+            processes[shortestIndex].Completion_time = currentTime;
+            processes[shortestIndex].Turnaround_time = currentTime - processes[shortestIndex].Arrival_time;
+            processes[shortestIndex].Waiting_time = processes[shortestIndex].Turnaround_time - processes[shortestIndex].Burst_time;
+            isVisited[shortestIndex] = 1;
+            completed++;
+        } else {
+            currentTime++;
+        }
+    }
 }
-void ct(struct process processes[],int num){
-        for(int i=0;i<num;i++){
-            processes[i].completionTime=processes[i].Burst_time+processes[i].Arrival_time+(processes[i-1].completionTime==0?0:processes[i-1].completionTime);
-        }
+
+void displayProcesses(struct process processes[], int n) {
+    printf("\nPID\tArrival\tBurst\tCompletion\tTAT\tWT\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d\t%d\t%d\t%d\t\t%d\t%d\n",
+               processes[i].p_id,
+               processes[i].Arrival_time,
+               processes[i].Burst_time,
+               processes[i].Completion_time,
+               processes[i].Turnaround_time,
+               processes[i].Waiting_time);
+    }
 }
-void main(){
-        int num=0;
 
-        printf("Enter the number of program");
-        scanf("%d",&num);
+int main() {
+    int n;
 
-        struct process processes[num];
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
 
-        for(int i=0;i<num;i++){
-                printf("Enter the number:");
-                
-                scanf("%d",&processes[i].p_id);
-                printf("Enter the arrival time");
-                scanf("%d",&processes[i].Arrival_time);
-                printf("Enter the burst time");
-                scanf("%d",&processes[i].Burst_time);
-        }
-        checker(processes,num);
-        ct(processes,num);
-        Tat(processes,num);
-        Waiting_time(processes,num);
-        
-        for(int i=0;i<num;i++){
-                printf("\n");
-                
-                printf("The Completion time of %d is :%.2f\t",processes[i].p_id,processes[i].completionTime);
-                
-                printf("The Turn around time of %d time is :%.2f\t",processes[i].p_id,processes[i].tat);
-                
-                printf("The Waiting time of %d is :%.2f\t",processes[i].p_id,processes[i].Waiting_time);
-                printf("\n");
-                
-        };
-        
+    struct process processes[n];
+
+    for (int i = 0; i < n; i++) {
+        printf("\nProcess %d:\n", i + 1);
+        printf("Enter Arrival Time: ");
+        scanf("%d", &processes[i].Arrival_time);
+        printf("Enter Burst Time: ");
+        scanf("%d", &processes[i].Burst_time);
+        processes[i].p_id = i + 1;
+    }
+
+    sortByArrivalTime(processes, n);
+    sjfScheduling(processes, n);
+    displayProcesses(processes, n);
+
+    return 0;
 }
