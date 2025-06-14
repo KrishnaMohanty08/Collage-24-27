@@ -1,3 +1,3 @@
-public class 30_q1 {
+public class d30_q1 {
     
 }
