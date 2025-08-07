@@ -27,10 +27,5 @@ int main() {
         p[i] = c[sizeof(int) - 1 - i];
     }
 
-    printf("Bytes after converting endianness:\n");
-    for(int i = 0; i < sizeof(int); i++) {
-        printf("Byte %d: %d\n", i, p[i]);
-    }
-
     return 0;
 }

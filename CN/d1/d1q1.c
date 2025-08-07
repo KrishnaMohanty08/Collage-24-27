@@ -2,11 +2,19 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+//swap by value
+
 void swap(int *a, int *b) {
     int temp = *b;
     *b = *a;
     *a = temp;
 }
+//swap by reference
+//void swap(int &a, int &b) {
+//    int temp = b;
+//    b = a;
+//    a = temp;
+//}
 
 int main(int count, char *args[]) {
     int a = atoi(args[1]);
