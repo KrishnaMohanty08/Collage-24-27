@@ -1,13 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void quickSort(int *arr, int low, int high){
-    if(low<high){
-        int pos = partition(arr, low, high);
-        quickSort(arr, low, pos - 1);
-        quickSort(arr, pos + 1, high);
-    }
-}
 int partition(int *arr, int lb, int ub){
     int pivot = arr[lb];
     int start = lb;
@@ -24,6 +17,13 @@ int partition(int *arr, int lb, int ub){
     arr[lb] = arr[end];
     arr[end] = pivot;
     return end;
+}
+void quickSort(int *arr, int low, int high){
+    if(low<high){
+        int pos = partition(arr, low, high);
+        quickSort(arr, low, pos - 1);
+        quickSort(arr, pos + 1, high);
+    }
 }
 
 int main(int argc, char *argv[]) {
