@@ -16,7 +16,6 @@ public class bfs {
 		boolean visited[] = new boolean[n];
 		Queue<Integer> q = new LinkedList<Integer>();
 
-		// Run BFS for each component (handles disconnected graphs)
 		for (int s = 0; s < n; s++) {
 			if (!visited[s]) {
 				visited[s] = true;
@@ -24,7 +23,7 @@ public class bfs {
 				while (!q.isEmpty()) {
 					int v = q.remove();
 					System.out.print(v + " ");
-					// explore neighbors of v
+
 					for (int j = 0; j < n; j++) {
 						if (a[v][j] != 0 && !visited[j]) {
 							visited[j] = true;
